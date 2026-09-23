@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Encuesta de Percepción Territorial · OSCC Barranquilla 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#F4F4F4;--surface:#FFFFFF;--card:#FFFFFF;--card2:#F7F8FA;
+  --navy:#002855;--cobalt:#0057A8;--cobalt2:#00468a;
+  --gold:#C8A84B;--gold2:#9C7A2E;--gold-bg:rgba(200,168,75,.12);--gold-brd:rgba(200,168,75,.35);
+  --teal:#0E9F6E;--teal-bg:rgba(14,159,110,.09);--teal-brd:rgba(14,159,110,.25);
+  --accent:#D6534A;--acc2:#C0392B;--acc-bg:rgba(214,83,74,.08);--acc-brd:rgba(214,83,74,.28);
+  --border:rgba(0,40,85,.11);--brd2:rgba(0,40,85,.06);
+  --ink:#1C2B3A;--ink2:#3D5568;--ink3:#5A6878;
+  --r:10px;--r2:16px;--r3:24px;
+  --sh:0 4px 24px rgba(0,40,85,.07);
+  --font-d:'Fraunces',Georgia,serif;--font-b:'Space Grotesk',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-b);background:var(--bg);color:var(--ink);min-height:100vh;font-size:15px;line-height:1.65;padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0);}
+
+/* Header */
+.header{background:var(--navy);padding:20px 24px;position:relative;overflow:hidden;}
+.header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cobalt),var(--gold),var(--teal),var(--cobalt));background-size:400% 100%;animation:stripe 6s linear infinite;}
+@keyframes stripe{0%{background-position:0%}100%{background-position:400%}}
+.h-inner{max-width:680px;margin:0 auto;display:flex;align-items:center;gap:14px;}
+.h-logo{background:#fff;border-radius:8px;padding:6px 12px;font-weight:800;font-size:1.1em;color:var(--navy);letter-spacing:.04em;line-height:1;}
+.h-logo small{display:block;font-size:.5em;font-weight:600;color:var(--cobalt);letter-spacing:.02em;}
+.h-text{color:#fff;font-size:.82em;line-height:1.35;opacity:.85;}
+
+/* Container */
+.wrap{max-width:680px;margin:0 auto;padding:24px 16px 80px;}
+
+/* Progress */
+.prog{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:14px 18px;margin-bottom:20px;box-shadow:var(--sh);}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.prog-lbl{font-size:.72em;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);}
+.prog-pct{font-family:var(--font-d);font-size:.88em;font-weight:700;color:var(--cobalt);}
+.prog-track{height:4px;background:var(--brd2);border-radius:2px;overflow:hidden;}.prog-fill{height:100%;background:linear-gradient(90deg,var(--cobalt),var(--gold));border-radius:2px;transition:width .4s;width:0%;}
+.prog-dots{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
+.pdot{flex:1;min-width:50px;padding:5px 4px;border-radius:6px;font-size:.62em;font-weight:600;text-align:center;background:var(--card2);color:var(--ink3);border:1px solid transparent;cursor:pointer;transition:all .2s;}
+.pdot.active{background:rgba(0,87,168,.08);color:var(--cobalt);border-color:rgba(0,87,168,.2);}
+.pdot.done{background:var(--teal-bg);color:var(--teal);border-color:var(--teal-brd);}
+
+/* Sections */
+.sec{display:none;animation:fadeIn .3s;}.sec.vis{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r3);box-shadow:var(--sh);margin-bottom:18px;overflow:hidden;}
+.card-top{padding:16px 20px;border-bottom:1px solid var(--brd2);display:flex;align-items:center;gap:12px;}
+.ct-ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2em;flex-shrink:0;}
+.ct-ico.blue{background:rgba(0,87,168,.08);border:1px solid rgba(0,87,168,.18);}
+.ct-ico.gold{background:var(--gold-bg);border:1px solid var(--gold-brd);}
+.ct-ico.teal{background:var(--teal-bg);border:1px solid var(--teal-brd);}
+.ct-ico.red{background:var(--acc-bg);border:1px solid var(--acc-brd);}
+.ct-step{font-size:.62em;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);}.ct-title{font-family:var(--font-d);font-size:.95em;font-weight:600;color:var(--ink);}
+.card-body{padding:20px;}
+
+/* Fields */
+.fld{margin-bottom:16px;}
+.lbl{display:block;font-size:.82em;font-weight:600;color:var(--ink2);margin-bottom:5px;}.req{color:var(--accent);}
+input[type=text],input[type=number],input[type=date],input[type=time],textarea,select{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--r);background:var(--card2);color:var(--ink);font-family:var(--font-b);font-size:.88em;transition:border-color .2s;appearance:none;-webkit-appearance:none;}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--cobalt);box-shadow:0 0 0 3px rgba(0,87,168,.1);background:#fff;}
+textarea{resize:vertical;min-height:70px;}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(28,43,58,.4)' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px;}
+.fld-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}@media(max-width:520px){.fld-row{grid-template-columns:1fr;}}
+
+/* Options */
+.opts{display:flex;flex-direction:column;gap:6px;}.opts.h{flex-direction:row;flex-wrap:wrap;}
+.opt{display:flex;align-items:center;gap:9px;padding:9px 13px;border:1.5px solid var(--border);border-radius:var(--r);cursor:pointer;transition:all .18s;background:var(--card2);font-size:.85em;color:var(--ink2);}
+.opt:hover{border-color:var(--cobalt);background:rgba(0,87,168,.05);}
+.opt input{accent-color:var(--cobalt);cursor:pointer;width:auto;height:auto;padding:0;border:none;background:none;box-shadow:none;}
+.opt.sel{border-color:var(--cobalt);background:rgba(0,87,168,.07);color:var(--cobalt);font-weight:600;}
+
+/* Likert scale */
+.likert{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;}
+.lik-btn{flex:1;min-width:50px;padding:10px 4px;border:1.5px solid var(--border);border-radius:var(--r);text-align:center;cursor:pointer;transition:all .2s;background:var(--card2);font-size:.75em;font-weight:600;color:var(--ink3);line-height:1.2;}
+.lik-btn:hover{border-color:var(--cobalt);}
+.lik-btn.sel{border-color:var(--cobalt);background:var(--cobalt);color:#fff;}
+.lik-btn input{display:none;}
+
+/* Chips */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border-radius:20px;font-size:.75em;font-weight:600;cursor:pointer;border:1.5px solid;transition:all .18s;user-select:none;}
+.chip input{display:none;}
+.chip.c-b{background:rgba(0,87,168,.06);border-color:rgba(0,87,168,.2);color:var(--cobalt);}.chip.c-b.sel{background:var(--cobalt);color:#fff;}
+.chip.c-g{background:var(--gold-bg);border-color:var(--gold-brd);color:var(--gold2);}.chip.c-g.sel{background:var(--gold);color:#fff;}
+.chip.c-t{background:var(--teal-bg);border-color:var(--teal-brd);color:var(--teal);}.chip.c-t.sel{background:var(--teal);color:#fff;}
+.chip.c-r{background:var(--acc-bg);border-color:var(--acc-brd);color:var(--acc2);}.chip.c-r.sel{background:var(--acc2);color:#fff;}
+
+/* Info box */
+.ib{border-radius:var(--r);padding:12px 16px;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start;font-size:.82em;line-height:1.6;}
+.ib.blue{background:rgba(0,87,168,.06);border:1px solid rgba(0,87,168,.15);}
+.ib.gold{background:var(--gold-bg);border:1px solid var(--gold-brd);}
+.ii{font-size:1.1em;flex-shrink:0;margin-top:1px;}
+
+/* Separator */
+.sep{border:none;border-top:1px solid var(--brd2);margin:16px 0;}
+
+/* GPS */
+.gps-row{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end;}@media(max-width:480px){.gps-row{grid-template-columns:1fr;}}
+.btn-gps{padding:9px 14px;background:rgba(0,87,168,.07);border:1px solid rgba(0,87,168,.18);border-radius:var(--r);color:var(--cobalt);font-family:var(--font-b);font-size:.82em;font-weight:600;cursor:pointer;white-space:nowrap;}
+.gps-st{font-size:.78em;margin-top:3px;}.gps-st.ok{color:var(--teal);}.gps-st.err{color:var(--accent);}
+
+/* Navigation */
+.nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:6px;padding-top:16px;border-top:1px solid var(--brd2);}
+.btn{padding:10px 20px;border-radius:var(--r);font-family:var(--font-b);font-size:.88em;font-weight:600;cursor:pointer;border:none;transition:all .2s;display:flex;align-items:center;gap:6px;}
+.btn-prev{background:var(--card2);color:var(--ink2);border:1.5px solid var(--border);}.btn-prev:hover{background:var(--brd2);}
+.btn-next{background:var(--cobalt);color:#fff;box-shadow:0 3px 14px rgba(0,87,168,.25);}.btn-next:hover{background:var(--cobalt2);}
+.btn-send{background:linear-gradient(135deg,var(--gold),#b8923e);color:var(--ink);box-shadow:0 3px 14px rgba(200,168,75,.35);padding:12px 24px;font-weight:700;}
+
+/* Success */
+.done-screen{display:none;text-align:center;padding:48px 24px;background:var(--card);border:1px solid var(--border);border-radius:var(--r3);box-shadow:var(--sh);}
+.done-screen.vis{display:block;}.done-ico{font-size:3em;margin-bottom:12px;}
+.done-screen h2{font-family:var(--font-d);font-size:1.6em;font-weight:800;color:var(--teal);margin-bottom:8px;font-style:italic;}
+.done-screen p{color:var(--ink2);font-size:.88em;max-width:400px;margin:0 auto 16px;line-height:1.65;}
+.done-code{display:inline-block;padding:7px 18px;background:var(--teal-bg);border:1px solid var(--teal-brd);border-radius:8px;font-family:var(--font-d);font-size:1em;font-weight:700;color:var(--teal);margin-bottom:18px;letter-spacing:.05em;}
+.btn-new{padding:10px 22px;background:var(--cobalt);color:#fff;border:none;border-radius:var(--r);font-family:var(--font-b);font-size:.88em;font-weight:700;cursor:pointer;}
+
+/* Footer */
+.footer{border-top:1px solid var(--border);padding:12px 24px;display:flex;justify-content:space-between;align-items:center;font-size:.7em;color:var(--ink3);flex-wrap:wrap;gap:6px;background:var(--surface);}
+.footer b{color:var(--ink);}
+
+/* Photo */
+.photo-zone{border:2px dashed var(--border);border-radius:var(--r2);padding:22px;text-align:center;background:var(--card2);cursor:pointer;transition:all .2s;}.photo-zone:hover{border-color:var(--cobalt);background:rgba(0,87,168,.04);}
+.photo-zone p{font-size:.82em;color:var(--ink3);margin-top:5px;}
+.photo-preview{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.photo-thumb{width:72px;height:72px;object-fit:cover;border-radius:8px;border:2px solid var(--gold-brd);}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="h-inner">
+    <div class="h-logo">OSCC<small>Oficina de Seguridad y Convivencia</small></div>
+    <div class="h-text">Encuesta de Percepción Territorial<br>Gran Bazar · Rebolo · Barranquilla 2026</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- PROGRESS -->
+  <div class="prog">
+    <div class="prog-top"><span class="prog-lbl">Progreso</span><span class="prog-pct" id="pct">0%</span></div>
+    <div class="prog-track"><div class="prog-fill" id="fill"></div></div>
+    <div class="prog-dots">
+      <div class="pdot active" onclick="goTo(0)">Encuestador</div>
+      <div class="pdot" onclick="goTo(1)">Encuestado</div>
+      <div class="pdot" onclick="goTo(2)">Seguridad</div>
+      <div class="pdot" onclick="goTo(3)">Convivencia</div>
+      <div class="pdot" onclick="goTo(4)">Institucional</div>
+      <div class="pdot" onclick="goTo(5)">Cierre</div>
+    </div>
+  </div>
+
+  <!-- SEC 1 — DATOS DEL ENCUESTADOR -->
+  <div class="sec vis" id="s0">
+    <div class="card">
+      <div class="card-top"><div class="ct-ico blue">📋</div><div><div class="ct-step">Sección 1 de 6</div><div class="ct-title">Datos del encuestador y ubicación</div></div></div>
+      <div class="card-body">
+        <div class="ib blue"><span class="ii">📝</span><p>Complete sus datos antes de iniciar la encuesta. La ubicación GPS se captura automáticamente para georreferenciar las respuestas.</p></div>
+
+        <div class="fld"><label class="lbl">Código de encuesta <span style="font-weight:400;color:var(--ink3);font-size:.88em;">(automático)</span></label>
+          <input type="text" id="codigo" readonly style="background:var(--card2);color:var(--ink3);"></div>
+
+        <div class="fld-row">
+          <div class="fld"><label class="lbl">Fecha <span class="req">*</span></label><input type="date" id="fecha" required></div>
+          <div class="fld"><label class="lbl">Hora</label><input type="time" id="hora"></div>
+        </div>
+
+        <div class="fld"><label class="lbl">Nombre del encuestador <span class="req">*</span></label>
+          <input type="text" id="encuestador" placeholder="Nombre y apellidos" required></div>
+
+        <div class="fld"><label class="lbl">Rol</label>
+          <div class="opts h">
+            <label class="opt"><input type="radio" name="rol" value="estudiante"> Estudiante</label>
+            <label class="opt"><input type="radio" name="rol" value="docente"> Docente</label>
+            <label class="opt"><input type="radio" name="rol" value="gestor"> Gestor OSCC</label>
+          </div>
+        </div>
+
+        <div class="fld"><label class="lbl">Sector <span class="req">*</span></label>
+          <select id="sector" required>
+            <option value="">— Seleccione el sector —</option>
+            <option value="Rebolo — Sector Centro">Rebolo — Sector Centro</option>
+            <option value="Rebolo — Sector La Poza">Rebolo — Sector La Poza</option>
+            <option value="Rebolo — Sector Río">Rebolo — Sector Río</option>
+            <option value="Rebolo — Sector La Loma">Rebolo — Sector La Loma</option>
+            <option value="Gran Bazar — Zona Norte">Gran Bazar — Zona Norte</option>
+            <option value="Gran Bazar — Zona Centro">Gran Bazar — Zona Centro</option>
+            <option value="Gran Bazar — Zona Sur">Gran Bazar — Zona Sur</option>
+          </select>
+        </div>
+
+        <div class="fld"><label class="lbl">Dirección o referencia del punto de encuesta</label>
+          <input type="text" id="direccion" placeholder="Ej: Esquina calle 30 con carrera 22"></div>
+
+        <div class="sep"></div>
+        <div class="fld"><label class="lbl">📍 Ubicación GPS</label></div>
+        <div class="gps-row">
+          <div class="fld"><label class="lbl" style="font-size:.75em;">Latitud</label><input type="text" id="lat" placeholder="10.9685" readonly></div>
+          <div class="fld"><label class="lbl" style="font-size:.75em;">Longitud</label><input type="text" id="lng" placeholder="-74.7943" readonly></div>
+          <button type="button" class="btn-gps" onclick="capGPS()">📡 GPS</button>
+        </div>
+        <div class="gps-st" id="gps-st"></div>
+      </div>
+    </div>
+    <div class="nav"><span></span><button type="button" class="btn btn-next" onclick="goTo(1)">Siguiente →</button></div>
+  </div>
+
+  <!-- SEC 2 — DATOS DEL ENCUESTADO -->
+  <div class="sec" id="s1">
+    <div class="card">
+      <div class="card-top"><div class="ct-ico gold">👤</div><div><div class="ct-step">Sección 2 de 6</div><div class="ct-title">Perfil del encuestado</div></div></div>
+      <div class="card-body">
+        <div class="ib gold"><span class="ii">🔒</span><p>No registre el nombre del encuestado. La encuesta es anónima. Solo datos demográficos generales.</p></div>
+
+        <div class="fld"><label class="lbl">Rango de edad</label>
+          <div class="opts h">
+            <label class="opt"><input type="radio" name="edad" value="18-25"> 18–25</label>
+            <label class="opt"><input type="radio" name="edad" value="26-35"> 26–35</label>
+            <label class="opt"><input type="radio" name="edad" value="36-50"> 36–50</label>
+            <label class="opt"><input type="radio" name="edad" value="51-65"> 51–65</label>
+            <label class="opt"><input type="radio" name="edad" value="65+"> 65+</label>
+          </div>
+        </div>
+
+        <div class="fld"><label class="lbl">Género</label>
+          <div class="opts h">
+            <label class="opt"><input type="radio" name="genero" value="M"> Masculino</label>
+            <label class="opt"><input type="radio" name="genero" value="F"> Femenino</label>
+            <label class="opt"><input type="radio" name="genero" value="otro"> Otro / Prefiere no decir</label>
+          </div>
+        </div>
+
+        <div class="fld"><label class="lbl">¿Cuánto tiempo lleva viviendo en el sector?</label>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="tiempo_residencia" value="menos1"> Menos de 1 año</label>
+            <label class="opt"><input type="radio" name="tiempo_residencia" value="1-5"> 1 a 5 años</label>
+            <label class="opt"><input type="radio" name="tiempo_residencia" value="5-15"> 5 a 15 años</label>
+            <label class="opt"><input type="radio" name="tiempo_residencia" value="mas15"> Más de 15 años</label>
+            <label class="opt"><input type="radio" name="tiempo_residencia" value="no-reside"> No reside aquí (trabaja o transita)</label>
+          </div>
+        </div>
+
+        <div class="fld"><label class="lbl">Actividad principal</label>
+          <div class="opts h">
+            <label class="opt"><input type="radio" name="actividad" value="empleado"> Empleado</label>
+            <label class="opt"><input type="radio" name="actividad" value="independiente"> Independiente</label>
+            <label class="opt"><input type="radio" name="actividad" value="comerciante"> Comerciante</label>
+            <label class="opt"><input type="radio" name="actividad" value="estudiante"> Estudiante</label>
+            <label class="opt"><input type="radio" name="actividad" value="hogar"> Hogar</label>
+            <label class="opt"><input type="radio" name="actividad" value="desempleado"> Desempleado</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav">
+      <button type="button" class="btn btn-prev" onclick="goTo(0)">← Anterior</button>
+      <button type="button" class="btn btn-next" onclick="goTo(2)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- SEC 3 — PERCEPCIÓN DE SEGURIDAD -->
+  <div class="sec" id="s2">
+    <div class="card">
+      <div class="card-top"><div class="ct-ico red">🔒</div><div><div class="ct-step">Sección 3 de 6</div><div class="ct-title">Percepción de seguridad</div></div></div>
+      <div class="card-body">
+
+        <div class="fld"><label class="lbl">¿Qué tan seguro se siente en su barrio? <span class="req">*</span></label>
+          <div class="likert">
+            <label class="lik-btn"><input type="radio" name="p_seguridad" value="1">1<br><span style="font-size:.85em;">Muy inseguro</span></label>
+            <label class="lik-btn"><input type="radio" name="p_seguridad" value="2">2</label>
+            <label class="lik-btn"><input type="radio" name="p_seguridad" value="3">3<br><span style="font-size:.85em;">Neutral</span></label>
+            <label class="lik-btn"><input type="radio" name="p_seguridad" value="4">4</label>
+            <label class="lik-btn"><input type="radio" name="p_seguridad" value="5">5<br><span style="font-size:.85em;">Muy seguro</span></label>
+          </div>
+        </div>
+
+        <div class="fld"><label class="lbl">¿Ha sido víctima o testigo de algún delito en el último año?</label>
+          <div class="opts h">
+            <label class="opt"><input type="radio" name="victima" value="si_victima"> Sí — víctima</label>
+            <label class="opt"><input type="radio" name="victima" value="si_testigo"> Sí — testigo</label>
+            <label class="opt"><input type="radio" name="victima" value="no"> No</label>
+            <label class="opt"><input type="radio" name="victima" value="nr"> Prefiere no responder</label>
+          </div>
+        </div>
+
+        <div class="fld"><label class="lbl">¿Cuáles son los principales problemas de seguridad que percibe? <span style="font-weight:400;color:var(--ink3);font-size:.88em;">(puede seleccionar varios)</span></label>
+          <div class="chips">
+            <label class="chip c-r"><input type="checkbox" name="prob_seg" value="hurto"> Hurto / atraco</label>
+            <label class="chip c-r"><input type="checkbox" name="prob_seg" value="extorsion"> Extorsión / vacuna</label>
+            <label class="chip c-r"><input type="checkbox" name="prob_seg" value="microtrafico"> Microtráfico</label>
+            <label class="chip c-r"><input type="checkbox" name="prob_seg" value="homicidio"> Homicidios</label>
+            <label class="chip c-b"><input type="checkbox" name="prob_seg" value="grupos"> Grupos armados</label>
+            <label class="chip c-b"><input type="checkbox" name="prob_seg" value="vigilancia_ilegal"> Vigilancia ilegal</label>
+            <label class="chip c-g"><input type="checkbox" name="prob_seg" value="riñas"> Riñas / violencia</label>
+            <label class="chip c-g"><input type="checkbox" name="prob_seg" value="vif"> Violencia intrafamiliar</label>
+            <label class="chip c-t"><input type="checkbox" name="prob_seg" value="ninguno"> Ninguno</label>
+          </div>
+        </div>
+
+        <div class="fld"><label class="lbl">¿En qué horario se siente más inseguro?</label>
+          <div class="opts h">
+            <label class="opt"><input type="radio" name="horario_inseg" value="manana"> Mañana</label>
+            <label class="opt"><input type="radio" name="horario_inseg" value="tarde"> Tarde</label>
+            <label class="opt"><input type="radio" name="horario_inseg" value="noche"> Noche</label>
+            <label class="opt"><input type="radio" name="horario_inseg" value="madrugada"> Madrugada</label>
+            <label class="opt"><input type="radio" name="horario_inseg" value="siempre"> Todo el día</label>
+          </div>
+        </div>
+
+        <div class="fld"><label class="lbl">¿Ha cambiado la seguridad en el último año?</label>
+          <div class="opts h">
+            <label class="opt"><input type="radio" name="cambio_seg" value="mejorado"> Ha mejorado</label>
+            <label class="opt"><input type="radio" name="cambio_seg" value="igual"> Sigue igual</label>
+            <label class="opt"><input type="radio" name="cambio_seg" value="empeorado"> Ha empeorado</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav">
+      <button type="button" class="btn btn-prev" onclick="goTo(1)">← Anterior</button>
+      <button type="button" class="btn btn-next" onclick="goTo(3)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- SEC 4 — CONVIVENCIA -->
+  <div class="sec" id="s3">
+    <div class="card">
+      <div class="card-top"><div class="ct-ico gold">🤝</div><div><div class="ct-step">Sección 4 de 6</div><div class="ct-title">Convivencia y vida barrial</div></div></div>
+      <div class="card-body">
+
+        <div class="fld"><label class="lbl">¿Cómo califica la convivencia en su barrio?</label>
+          <div class="likert">
+            <label class="lik-btn"><input type="radio" name="p_convivencia" value="1">1<br><span style="font-size:.85em;">Muy mala</span></label>
+            <label class="lik-btn"><input type="radio" name="p_convivencia" value="2">2</label>
+            <label class="lik-btn"><input type="radio" name="p_convivencia" value="3">3<br><span style="font-size:.85em;">Regular</span></label>
+            <label class="lik-btn"><input type="radio" name="p_convivencia" value="4">4</label>
+            <label class="lik-btn"><input type="radio" name="p_convivencia" value="5">5<br><span style="font-size:.85em;">Muy buena</span></label>
+          </div>
+        </div>
+
+        <div class="fld"><label class="lbl">¿Cuáles son los principales problemas de convivencia?</label>
+          <div class="chips">
+            <label class="chip c-g"><input type="checkbox" name="prob_conv" value="ruido"> Ruido excesivo</label>
+            <label class="chip c-g"><input type="checkbox" name="prob_conv" value="basuras"> Basuras / aseo</label>
+            <label class="chip c-b"><input type="checkbox" name="prob_conv" value="espacio_pub"> Invasión espacio público</label>
+            <label class="chip c-b"><input type="checkbox" name="prob_conv" value="animales"> Animales sueltos</label>
+            <label class="chip c-r"><input type="checkbox" name="prob_conv" value="consumo_drogas"> Consumo de drogas en vía</label>
+            <label class="chip c-r"><input type="checkbox" name="prob_conv" value="alcohol"> Consumo de alcohol en vía</label>
+            <label class="chip c-g"><input type="checkbox" name="prob_conv" value="vecinos"> Conflictos entre vecinos</label>
+            <label class="chip c-t"><input type="checkbox" name="prob_conv" value="ninguno"> Ninguno</label>
+          </div>
+        </div>
+
+        <div class="fld"><label class="lbl">¿Participa en alguna organización comunitaria?</label>
+          <div class="opts h">
+            <label class="opt"><input type="radio" name="org_comunitaria" value="jac"> JAC / Junta comunal</label>
+            <label class="opt"><input type="radio" name="org_comunitaria" value="iglesia"> Organización religiosa</label>
+            <label class="opt"><input type="radio" name="org_comunitaria" value="deporte"> Club deportivo</label>
+            <label class="opt"><input type="radio" name="org_comunitaria" value="cultural"> Grupo cultural</label>
+            <label class="opt"><input type="radio" name="org_comunitaria" value="ninguna"> Ninguna</label>
+          </div>
+        </div>
+
+        <div class="fld"><label class="lbl">¿Confía en sus vecinos?</label>
+          <div class="likert">
+            <label class="lik-btn"><input type="radio" name="confianza_vecinos" value="1">1<br><span style="font-size:.85em;">Nada</span></label>
+            <label class="lik-btn"><input type="radio" name="confianza_vecinos" value="2">2</label>
+            <label class="lik-btn"><input type="radio" name="confianza_vecinos" value="3">3</label>
+            <label class="lik-btn"><input type="radio" name="confianza_vecinos" value="4">4</label>
+            <label class="lik-btn"><input type="radio" name="confianza_vecinos" value="5">5<br><span style="font-size:.85em;">Mucho</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav">
+      <button type="button" class="btn btn-prev" onclick="goTo(2)">← Anterior</button>
+      <button type="button" class="btn btn-next" onclick="goTo(4)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- SEC 5 — PERCEPCIÓN INSTITUCIONAL -->
+  <div class="sec" id="s4">
+    <div class="card">
+      <div class="card-top"><div class="ct-ico blue">🏛️</div><div><div class="ct-step">Sección 5 de 6</div><div class="ct-title">Confianza institucional</div></div></div>
+      <div class="card-body">
+
+        <div class="fld"><label class="lbl">¿Qué tanto confía en la Policía Nacional?</label>
+          <div class="likert">
+            <label class="lik-btn"><input type="radio" name="conf_policia" value="1">1<br><span style="font-size:.85em;">Nada</span></label>
+            <label class="lik-btn"><input type="radio" name="conf_policia" value="2">2</label>
+            <label class="lik-btn"><input type="radio" name="conf_policia" value="3">3</label>
+            <label class="lik-btn"><input type="radio" name="conf_policia" value="4">4</label>
+            <label class="lik-btn"><input type="radio" name="conf_policia" value="5">5<br><span style="font-size:.85em;">Mucho</span></label>
+          </div>
+        </div>
+
+        <div class="fld"><label class="lbl">¿Qué tanto confía en la Alcaldía / OSCC?</label>
+          <div class="likert">
+            <label class="lik-btn"><input type="radio" name="conf_alcaldia" value="1">1<br><span style="font-size:.85em;">Nada</span></label>
+            <label class="lik-btn"><input type="radio" name="conf_alcaldia" value="2">2</label>
+            <label class="lik-btn"><input type="radio" name="conf_alcaldia" value="3">3</label>
+            <label class="lik-btn"><input type="radio" name="conf_alcaldia" value="4">4</label>
+            <label class="lik-btn"><input type="radio" name="conf_alcaldia" value="5">5<br><span style="font-size:.85em;">Mucho</span></label>
+          </div>
+        </div>
+
+        <div class="fld"><label class="lbl">Si fue víctima o testigo de un delito, ¿denunció?</label>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="denuncia" value="si"> Sí — ante la Policía o Fiscalía</label>
+            <label class="opt"><input type="radio" name="denuncia" value="no_miedo"> No — por miedo a represalias</label>
+            <label class="opt"><input type="radio" name="denuncia" value="no_inutil"> No — no sirve de nada</label>
+            <label class="opt"><input type="radio" name="denuncia" value="no_desconoce"> No — no sabe cómo ni dónde</label>
+            <label class="opt"><input type="radio" name="denuncia" value="na"> No aplica</label>
+          </div>
+        </div>
+
+        <div class="fld"><label class="lbl">¿Qué necesita el barrio con mayor urgencia?</label>
+          <div class="chips">
+            <label class="chip c-b"><input type="checkbox" name="necesidad" value="mas_policia"> Más presencia policial</label>
+            <label class="chip c-b"><input type="checkbox" name="necesidad" value="camaras"> Cámaras de seguridad</label>
+            <label class="chip c-g"><input type="checkbox" name="necesidad" value="alumbrado"> Mejor alumbrado público</label>
+            <label class="chip c-g"><input type="checkbox" name="necesidad" value="espacios"> Espacios de recreación</label>
+            <label class="chip c-t"><input type="checkbox" name="necesidad" value="empleo"> Oportunidades de empleo</label>
+            <label class="chip c-t"><input type="checkbox" name="necesidad" value="educacion"> Programas educativos</label>
+            <label class="chip c-r"><input type="checkbox" name="necesidad" value="justicia"> Acceso a justicia</label>
+            <label class="chip c-r"><input type="checkbox" name="necesidad" value="intervencion"> Intervención contra grupos ilegales</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav">
+      <button type="button" class="btn btn-prev" onclick="goTo(3)">← Anterior</button>
+      <button type="button" class="btn btn-next" onclick="goTo(5)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- SEC 6 — CIERRE -->
+  <div class="sec" id="s5">
+    <div class="card">
+      <div class="card-top"><div class="ct-ico teal">✅</div><div><div class="ct-step">Sección 6 de 6</div><div class="ct-title">Observaciones y envío</div></div></div>
+      <div class="card-body">
+
+        <div class="fld"><label class="lbl">Observaciones adicionales del encuestado</label>
+          <textarea id="obs_encuestado" maxlength="500" placeholder="¿Algo más que quiera comentar sobre la seguridad o convivencia en su barrio?"></textarea>
+        </div>
+
+        <div class="fld"><label class="lbl">Notas del encuestador (no se muestra al encuestado)</label>
+          <textarea id="notas_encuestador" maxlength="500" placeholder="Impresiones, contexto del momento de la encuesta, actitud del encuestado..."></textarea>
+        </div>
+
+        <div class="fld"><label class="lbl">Registro fotográfico del punto de encuesta</label>
+          <input type="file" id="fotos-input" accept="image/*" multiple style="display:none">
+          <div class="photo-zone" id="photoZone1">
+            <div style="font-size:1.8em">📷</div>
+            <p>Toque para adjuntar fotos del lugar<br><small>Hasta 5 fotos · Sin personas identificables</small></p>
+            <div class="photo-preview" id="photoPreview1"></div>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+        <div class="ib blue"><span class="ii">📝</span><p>Al enviar se registrará en la base de datos de la OSCC. La encuesta es <strong>anónima</strong> — no se almacenan datos que identifiquen al encuestado.</p></div>
+      </div>
+    </div>
+    <div class="nav">
+      <button type="button" class="btn btn-prev" onclick="goTo(4)">← Anterior</button>
+      <button type="button" class="btn btn-send" onclick="enviar()">✅ Enviar encuesta</button>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="done-screen" id="done">
+    <div class="done-ico">✅</div>
+    <h2>Encuesta registrada</h2>
+    <p>Gracias por contribuir al diagnóstico territorial de Barranquilla. Sus respuestas son anónimas y serán utilizadas para mejorar la seguridad y convivencia del sector.</p>
+    <div class="done-code" id="done-code">ENC-XXX</div><br><br>
+    <button class="btn-new" onclick="nuevaEncuesta()">📋 Nueva encuesta</button>
+  </div>
+</div>
+
+<div class="footer">
+  <div><b>OSCC Barranquilla 2026</b> · Encuesta de Percepción Territorial</div>
+  <div>VIRTUS GLOBAL · CONVIVE 360°</div>
+</div>
+
+<script>
+const TOTAL = 6;
+let cur = 0;
+
+function goTo(i) {
+  if (i < 0 || i >= TOTAL) return;
+  document.querySelectorAll('.sec').forEach((s, j) => s.classList.toggle('vis', j === i));
+  document.querySelectorAll('.pdot').forEach((d, j) => { d.classList.remove('active','done'); if (j < i) d.classList.add('done'); if (j === i) d.classList.add('active'); });
+  cur = i;
+  const p = Math.round(cur / (TOTAL - 1) * 100);
+  document.getElementById('pct').textContent = p + '%';
+  document.getElementById('fill').style.width = p + '%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function capGPS() {
+  const st = document.getElementById('gps-st');
+  st.textContent = '⏳ Obteniendo...'; st.className = 'gps-st';
+  if (!navigator.geolocation) { st.textContent = '✗ No disponible'; st.className = 'gps-st err'; return; }
+  navigator.geolocation.getCurrentPosition(
+    p => { document.getElementById('lat').value = p.coords.latitude.toFixed(6); document.getElementById('lng').value = p.coords.longitude.toFixed(6); st.textContent = '✓ ' + p.coords.accuracy.toFixed(0) + 'm'; st.className = 'gps-st ok'; },
+    e => { st.textContent = '✗ ' + e.message; st.className = 'gps-st err'; },
+    { enableHighAccuracy: true, timeout: 10000 });
+}
+
+// Interactividad
+document.querySelectorAll('.opt').forEach(o => o.addEventListener('click', () => {
+  const inp = o.querySelector('input'), n = inp.name;
+  document.querySelectorAll('input[name="'+n+'"]').forEach(i => i.closest('.opt').classList.remove('sel'));
+  inp.checked = true; o.classList.add('sel');
+}));
+document.querySelectorAll('.lik-btn').forEach(b => b.addEventListener('click', () => {
+  const inp = b.querySelector('input'), n = inp.name;
+  document.querySelectorAll('input[name="'+n+'"]').forEach(i => i.closest('.lik-btn').classList.remove('sel'));
+  inp.checked = true; b.classList.add('sel');
+}));
+document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+  const inp = c.querySelector('input');
+  if (inp.type === 'checkbox') { inp.checked = !inp.checked; c.classList.toggle('sel', inp.checked); }
+}));
+
+// Fotos
+const MAX_FOTOS = 5, MAX_PX = 1200, CALIDAD = 0.7;
+let fotosBase64 = [];
+(function initPhotos() {
+  const zone = document.getElementById('photoZone1');
+  const input = document.getElementById('fotos-input');
+  zone.addEventListener('click', () => input.click());
+  input.addEventListener('change', async (e) => {
+    const preview = document.getElementById('photoPreview1');
+    const archivos = Array.from(e.target.files).slice(0, MAX_FOTOS - fotosBase64.length);
+    for (const f of archivos) {
+      try {
+        const comp = await comprimir(f);
+        fotosBase64.push(comp);
+        const img = document.createElement('img'); img.src = comp; img.className = 'photo-thumb';
+        preview.appendChild(img);
+      } catch(err) { console.warn(err); }
+    }
+  });
+})();
+function comprimir(archivo) {
+  return new Promise((res, rej) => {
+    const reader = new FileReader();
+    reader.onload = e => { const img = new Image(); img.onload = () => {
+      const c = document.createElement('canvas'); let w = img.width, h = img.height;
+      if (w > MAX_PX || h > MAX_PX) { if (w > h) { h = Math.round(h*MAX_PX/w); w = MAX_PX; } else { w = Math.round(w*MAX_PX/h); h = MAX_PX; } }
+      c.width = w; c.height = h; c.getContext('2d').drawImage(img, 0, 0, w, h);
+      res(c.toDataURL('image/jpeg', CALIDAD));
+    }; img.onerror = rej; img.src = e.target.result; };
+    reader.onerror = rej; reader.readAsDataURL(archivo);
+  });
+}
+
+// Envío
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwOGjhUu0dezk3H3klf9obDiox6GLHHLmMJr4JHt68wooIWx44aDsEduBNjOZqtJbnG/exec';
+
+function recolectar() {
+  const radio = n => { const el = document.querySelector('input[name="'+n+'"]:checked'); return el ? el.value : ''; };
+  const chips = n => Array.from(document.querySelectorAll('input[name="'+n+'"]:checked')).map(i => i.value).join(' | ');
+  return {
+    pp: 'ENC',
+    codigo: document.getElementById('codigo').value,
+    fecha: document.getElementById('fecha').value,
+    hora: document.getElementById('hora').value,
+    encuestador: document.getElementById('encuestador').value,
+    rol: radio('rol'),
+    sector: document.getElementById('sector').value,
+    direccion: document.getElementById('direccion').value,
+    latitud: document.getElementById('lat').value,
+    longitud: document.getElementById('lng').value,
+    edad: radio('edad'),
+    genero: radio('genero'),
+    tiempo_residencia: radio('tiempo_residencia'),
+    actividad: radio('actividad'),
+    p_seguridad: radio('p_seguridad'),
+    victima: radio('victima'),
+    prob_seguridad: chips('prob_seg'),
+    horario_inseguro: radio('horario_inseg'),
+    cambio_seguridad: radio('cambio_seg'),
+    p_convivencia: radio('p_convivencia'),
+    prob_convivencia: chips('prob_conv'),
+    org_comunitaria: radio('org_comunitaria'),
+    confianza_vecinos: radio('confianza_vecinos'),
+    conf_policia: radio('conf_policia'),
+    conf_alcaldia: radio('conf_alcaldia'),
+    denuncia: radio('denuncia'),
+    necesidades: chips('necesidad'),
+    obs_encuestado: document.getElementById('obs_encuestado').value,
+    notas_encuestador: document.getElementById('notas_encuestador').value,
+    fotos_base64: fotosBase64,
+    timestamp: new Date().toISOString(),
+  };
+}
+
+async function enviar() {
+  const btn = document.querySelector('.btn-send');
+  btn.textContent = '⏳ Enviando...'; btn.disabled = true;
+  try {
+    const data = recolectar();
+    await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) });
+    document.getElementById('done-code').textContent = data.codigo;
+    document.querySelectorAll('.sec').forEach(s => s.classList.remove('vis'));
+    document.getElementById('done').classList.add('vis');
+    document.getElementById('fill').style.width = '100%';
+    document.getElementById('pct').textContent = '100%';
+    document.querySelectorAll('.pdot').forEach(d => d.classList.add('done'));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch(err) {
+    btn.textContent = '✅ Enviar encuesta'; btn.disabled = false;
+    alert('Error al enviar. Verifique su conexión.');
+  }
+}
+
+function nuevaEncuesta() {
+  document.getElementById('done').classList.remove('vis');
+  fotosBase64 = [];
+  document.getElementById('photoPreview1').innerHTML = '';
+  document.querySelectorAll('.opt,.chip,.lik-btn').forEach(el => el.classList.remove('sel'));
+  document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(i => i.checked = false);
+  document.querySelectorAll('textarea').forEach(t => t.value = '');
+  document.getElementById('sector').value = '';
+  document.getElementById('direccion').value = '';
+  document.getElementById('lat').value = '';
+  document.getElementById('lng').value = '';
+  document.getElementById('gps-st').textContent = '';
+  goTo(0);
+  document.getElementById('codigo').value = 'ENC-' + Date.now().toString(36).toUpperCase().slice(-6);
+  document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
+  document.getElementById('hora').value = new Date().toTimeString().slice(0,5);
+  capGPS();
+}
+
+// Init
+goTo(0);
+document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
+document.getElementById('hora').value = new Date().toTimeString().slice(0,5);
+document.getElementById('codigo').value = 'ENC-' + Date.now().toString(36).toUpperCase().slice(-6);
+setTimeout(capGPS, 500);
+</script>
+</body>
+</html>
