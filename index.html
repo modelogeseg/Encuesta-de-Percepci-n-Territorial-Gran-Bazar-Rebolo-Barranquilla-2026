@@ -608,7 +608,9 @@ async function enviar() {
   btn.textContent = '⏳ Enviando...'; btn.disabled = true;
   try {
     const data = recolectar();
-    await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) });
+    const resp = await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) });
+    const j = await resp.json();
+    if (j.status !== 'ok') throw new Error(j.message || 'Error del servidor');
     document.getElementById('done-code').textContent = data.codigo;
     document.querySelectorAll('.sec').forEach(s => s.classList.remove('vis'));
     document.getElementById('done').classList.add('vis');
@@ -618,7 +620,8 @@ async function enviar() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } catch(err) {
     btn.textContent = '✅ Enviar encuesta'; btn.disabled = false;
-    alert('Error al enviar. Verifique su conexión.');
+    console.error('Error al enviar:', err);
+    alert('Error al enviar: ' + err.message + '\nVerifique su conexión e intente de nuevo.');
   }
 }
 
